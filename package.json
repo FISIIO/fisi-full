@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js --ignore browser/"
+    "server": "nodemon server.js --ignore browser/",
+    "build": "cd browser && webpack -d --watch"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,20 @@
   },
   "homepage": "https://github.com/erickrawczyk/fisi-full#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "autoprefixer": "^6.4.1",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-react": "^6.11.1",
+    "css-loader": "^0.25.0",
+    "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "jquery": "^3.1.0",
+    "node-sass": "^3.10.0",
+    "postcss-loader": "^0.13.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1"
   },
   "devDependencies": {
     "nodemon": "^1.10.2"

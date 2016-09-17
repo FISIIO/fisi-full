@@ -13,3 +13,7 @@ node_modules
 
 # OS Files
 .DS_Store
+
+# Built Frontend
+browser/dist/css/
+browser/dist/bundle.*
