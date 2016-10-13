@@ -1,41 +1,54 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-var Style = require('./fast-style')
-$ = require('jquery')
+var React          = require('react');
+var ReactDOM       = require('react-dom');
+var $              = require('jquery');
+var animateElement = require('../lib/animateElement')
 
-require ('../styles/description-display-style.scss')
+require ('../styles/description-display-style.scss');
 
-function animateElement (elt, animation, delay, duration){ 
-  var webkit = ['', 'webkit']
+class DescriptionDisplay extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      nextEventDisplay: 'TBA'
+    }
+  }
 
-  Style.setStyle (elt, 'animation-duration', duration + 's', webkit)
-  Style.setStyle (elt, 'animation-delay', delay + 's', webkit)
-  Style.setStyle (elt, 'animation-name', animation, webkit)
-}
+  static animate() {
+    $( '#info' ).css("opacity", "0")
+    var rects = $( 'rect' )
+    var length = $( 'rect' ).length
+    var baseDelay = .1
+    var offsetDelay = .05
+    var duration = 1.2
+    for(var i = 0; i < length; ++i){
+      var delay = baseDelay + (offsetDelay * i);
+      animateElement(rects[i], "zoom-in", delay, duration)
+    }
+    var contentDelay = baseDelay + (offsetDelay * length) + duration
+    animateElement("stripes", "fade-out", contentDelay, .8)
+    contentDelay += .4
+    animateElement("info", "fade-in", contentDelay, .8)
+  }
 
-module.exports = React.createClass({
-  statics: {
-    animate: function (){
-      $( '#info' ).css("opacity", "0")
-      var rects = $( 'rect' )
-      var length = $( 'rect' ).length
-      var baseDelay = .1
-      var offsetDelay = .05
-      var duration = 1.2
-      for(var i = 0; i < length; ++i){
-        var delay = baseDelay + (offsetDelay * i);
-        animateElement(rects[i], "zoom-in", delay, duration)
+  componentDidMount() {
+    this.serverRequest = $.get('/api/events', (result) => {
+      if (result.length) {
+        let nextEvent = new Date(result[0].start_time);
+        let month = nextEvent.getMonth() + 1;
+        let day   = nextEvent.getDate();
+        let year  = nextEvent.getFullYear().toString().slice(2);
+        this.setState({
+          nextEventDisplay: `${month}•${day}•${year}`
+        })
       }
-      var contentDelay = baseDelay + (offsetDelay * length) + duration
-      var stripes = document.getElementById ("stripes")
-      animateElement(stripes, "fade-out", contentDelay, .8)
-      contentDelay += .4
-      var info = document.getElementById ("info")
-      animateElement(info, "fade-in", contentDelay, .8)
-    },
-  },
+    })
+  }
 
-  render: function(){
+  componentWillUnmount() {
+    this.serverRequest.abort();
+  }
+
+  render() {
     return (
       <div className="description-display">
         <div className="head">
@@ -67,7 +80,7 @@ module.exports = React.createClass({
           <div className="left-side">
             <div className="date">
               <h3>Thursday</h3>
-              <h3>04&bull;07&bull;16</h3>
+              <h3>{ this.state.nextEventDisplay }</h3>
             </div>
           </div>
           <div className="tagline">
@@ -77,4 +90,6 @@ module.exports = React.createClass({
       </div>
     )
   }
-})
+}
+
+module.exports = DescriptionDisplay;

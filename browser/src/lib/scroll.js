@@ -1,8 +1,6 @@
-var Style = require ('./fast-style')
-require ('../styles/scrollView.scss')
+var Style = require ('./fast-style');
+require ('../styles/scrollView.scss');
 
-// left: 37, up: 38, right: 39, down: 40,
-// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
 var keys = {37: true, 38: true, 39: true, 40: true}
 var directions = { 'Up': -1, 'Down': 1 }
 var UP = -1
@@ -12,7 +10,7 @@ function preventDefault(e) {
   e = e || window.event;
   if (e.preventDefault)
       e.preventDefault();
-  e.returnValue = false;  
+  e.returnValue = false;
 }
 
 function preventDefaultForScrollKeys(e) {
@@ -122,7 +120,7 @@ exports = module.exports = {
         removeClass(toElt, 'next-section' )
         toSection.senseScroll(true)
         // toSection.enter()
-      }.bind(this) 
+      }.bind(this)
 
       //if from section exists, animate from it
       addClass(toElt, "next-section")
@@ -163,7 +161,7 @@ exports = module.exports = {
     var bottom = top + window.innerHeight
     var height = sectionElt.scrollHeight
 
-    if((bottom >= height && deltaY > sensivity) || 
+    if((bottom >= height && deltaY > sensivity) ||
       (top <= 0 && deltaY < -sensivity) ){
 
         var index = this.getSectionIndex( section );
@@ -179,7 +177,7 @@ exports = module.exports = {
 
   senseMousePaging: function(section, event) {
     if(section.hasScroll()){
-      this.sensePaging(section, 10, event.deltaY)  
+      this.sensePaging(section, 10, event.deltaY)
     }
   },
 
@@ -199,7 +197,7 @@ exports = module.exports = {
   },
 
   senseKeyPaging: function (event){
-    console.log(event)
+    // console.log(event)
     if (keys[event.keyCode]) {
       preventDefault(event);
       if(event.keyIdentifier == 'Up' || event.keyIdentifier == 'Down'){
@@ -232,7 +230,7 @@ exports = module.exports = {
     }
     if (section.listeners["mousewheel"] === undefined){
       section.listeners["mousewheel"] = this.senseMousePaging.bind(this, section)
-      sectionElt.addEventListener("mouseWheel", section.listeners["mouseWheel"]) 
+      sectionElt.addEventListener("mouseWheel", section.listeners["mouseWheel"])
     }
     if (section.listeners["touchstart"] === undefined){
       section.listeners["touchstart"] = this.senseTouchPaging.bind(this, section)

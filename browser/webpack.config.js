@@ -20,7 +20,7 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['react'] } },
+      { test: /\.js$|\.jsx$/, exclude: /node_modules/, loader: 'babel-loader', query: { presets: ['react'] } },
       { test: /\.scss$/, loader: extractCSS.extract("style-loader", 'css-loader!postcss-loader!sass-loader') }
     ],
   },
