@@ -24,6 +24,7 @@ sudo chown -R ubuntu:ubuntu $HOME
 
 # Clone app
 git clone https://github.com/fisiio/fisi-full.git $HOME/app
+sudo chown -R ubuntu:ubuntu $HOME/app
 
 # Nginx
 cp $HOME/app/nginx.conf /etc/nginx/nginx.conf
@@ -35,8 +36,8 @@ aws s3 cp s3://fisi-deploy/keys.json $HOME/app --region us-east-1
 # install app
 cd $HOME/app && \
 npm set progress=false && \
-sudo -u ubuntu -g ubuntu git checkout master && \
-sudo -u ubuntu -g ubuntu npm install --production
+git checkout master && \
+npm install --production
 
 cd $HOME/app/browser && \
 webpack
