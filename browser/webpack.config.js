@@ -1,6 +1,6 @@
 const path              = require('path')
 const webpack           = require('webpack')
-const Autoprefixer      = require('Autoprefixer')
+const autoprefixer      = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractCSS        = new ExtractTextPlugin('css/[name].css')
 
@@ -27,7 +27,7 @@ module.exports = {
 
   plugins: [ extractCSS ],
 
-  postcss: [ Autoprefixer({ browsers: ['last 2 versions'] }) ],
+  postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
 
   resolve: {
     modulesDirectories: ['node_modules',],
