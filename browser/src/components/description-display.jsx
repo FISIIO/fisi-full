@@ -31,6 +31,9 @@ class DescriptionDisplay extends React.Component {
   }
 
   componentDidMount() {
+    return this.setState({
+      nextEventDisplay: `04•12•18`
+    })
     this.serverRequest = $.get('/api/events', (result) => {
       if (result.length) {
         let nextEvent = new Date(result[0].start_time);

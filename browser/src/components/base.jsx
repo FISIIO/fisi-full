@@ -22,7 +22,7 @@ $(document).ready( function() {
   Scroll.addKeyListener();
   Scroll.switchSection( splashSection );
 
-  var mapContainerProps = { latitude: 42.273909, longitude: -83.725786 };
+  var mapContainerProps = { latitude: 42.268775, longitude: -83.739094 };
 
   ReactDOM.render(<DescriptionDisplay />, document.getElementById ('description-container'));
   ReactDOM.render(<MapDisplay { ...mapContainerProps} />, document.getElementById('location-container'));
